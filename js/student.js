@@ -1,65 +1,80 @@
-function getAgeString(age) {
-  const words = ["год", "года", "лет"];
-  const cases = [2, 0, 1, 1, 1, 2];
-  const index =
-    age % 100 > 4 && age % 100 < 20 ? 2 : cases[age % 10 < 5 ? age % 10 : 5];
-  return words[index];
-}
+"use strict";
 
-const today = new Date();
-
-class Student {
-  name;
-  surname;
-  patronymic;
-  birthdate;
-  startStudyYear;
-  faculty;
+export default class Student {
+  #name;
+  #surname;
+  #patronymic;
+  #birthdate;
+  #startStudyYear;
+  #faculty;
+  #today;
+  #currYear;
 
   constructor(name, surname, patronymic, birthdate, startStudyYear, faculty) {
-    this.name = name;
-    this.surname = surname;
-    this.patronymic = patronymic;
-    this.birthdate = birthdate;
-    this.startStudyYear = startStudyYear;
-    this.faculty = faculty;
+    this.#name = name;
+    this.#surname = surname;
+    this.#patronymic = patronymic;
+    this.#birthdate = birthdate;
+    this.#startStudyYear = startStudyYear;
+    this.#faculty = faculty;
+
+    this.#today = new Date();
+    this.#currYear = this.#today.getFullYear();
   }
 
-  getFullName() {
-    return `${this.surname} ${this.name} ${this.patronymic}`;
+  get fio() {
+    return this.#surname + " " + this.#name + " " + this.#patronymic;
   }
 
-  getFaculty() {
-    return this.faculty;
+  get age() {
+    return this.#currYear - this.#birthdate.getFullYear();
   }
 
-  getBirthdateAndAge() {
-    const year = this.birthdate.getFullYear();
-    let month = this.birthdate.getMonth() + 1;
+  get startStudyYear() {
+    return this.#startStudyYear;
+  }
+
+  set startStudyYear(startStudyYear) {
+    this.#startStudyYear = startStudyYear;
+  }
+
+  get faculty() {
+    return this.#faculty;
+  }
+
+  set faculty(faculty) {
+    this.#faculty = faculty;
+  }
+
+  getAge() {
+    const age = this.#currYear - this.#birthdate.getFullYear();
+    const words = ["год", "года", "лет"];
+    const cases = [2, 0, 1, 1, 1, 2];
+    const index =
+      age % 100 > 4 && age % 100 < 20 ? 2 : cases[age % 10 < 5 ? age % 10 : 5];
+    return age + " " + words[index];
+  }
+
+  getBirthdate() {
+    const year = this.#birthdate.getFullYear();
+    let month = this.#birthdate.getMonth() + 1;
     month = month < 10 ? "0" + month : month;
-    let day = this.birthdate.getDate();
+    let day = this.#birthdate.getDate();
     day = day < 10 ? "0" + day : day;
-    const age = today.getFullYear() - year;
+    return day + "." + month + "." + year;
+  }
 
-    return `${day}.${month}.${year} (${age} ${getAgeString(age)})`;
+  getBirthdateAndAgeString() {
+    return this.getBirthdate() + " (" + this.getAge() + ")";
   }
 
   getCourseOfStudy() {
-    const endStudyYear = this.startStudyYear + 4;
-    // доделать получение курса. Если сентябрь года окончания обучения уже прошел - закончил
-    return;
+    const endStudyYear = this.#startStudyYear + 4;
+    const course =
+      (endStudyYear === this.#currYear && today.getMonth >= 8) ||
+      endStudyYear < this.#currYear
+        ? "Закончил"
+        : `${this.#currYear - this.#startStudyYear} курс`;
+    return `${this.#startStudyYear} - ${endStudyYear} (${course})`;
   }
 }
-
-const student = new Student(
-  "Игорь",
-  "Готовчик",
-  "Витальевич",
-  new Date(1995, 6, 18),
-  2022,
-  "Информационные технологии"
-);
-
-console.log(student.getFullName());
-console.log(student.getBirthdateAndAge());
-console.log(student.getFaculty());
