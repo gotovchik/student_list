@@ -2,6 +2,7 @@
 
 import Student from "./student.js";
 
+// массив студентов
 const students = [
   new Student(
     "Игорь",
@@ -36,6 +37,7 @@ const addStudentForm = document.getElementById("addStudentForm");
 const btnSubmit = addStudentForm.querySelector("button");
 const currDate = new Date();
 
+// выставляем максимальное значение для инпута
 document
   .getElementById("addBirthdate")
   .setAttribute("max", currDate.toISOString().split("T")[0]);
@@ -44,11 +46,13 @@ const inputStartStudyYear = document.getElementById("addStartStudyYear");
 inputStartStudyYear.setAttribute("max", currDate.getFullYear());
 inputStartStudyYear.setAttribute("value", currDate.getFullYear());
 
+// переменные для сортировки и фильтрации
 let sortProp = "fio";
 let sortDir = true;
 let filterProp = "fio";
 let filterValue = "";
 
+// рендер данных студента в строку таблицы
 function createTableRow(student) {
   const tableRow = document.createElement("tr");
   const studentFIO = document.createElement("td");
@@ -69,6 +73,7 @@ function createTableRow(student) {
   return tableRow;
 }
 
+// рендер всей таблицы
 function renderStudentTable() {
   const students = filterStudents(
     sortStudents(sortProp, sortDir),
@@ -83,6 +88,7 @@ function renderStudentTable() {
   }
 }
 
+// сортировка студентов по свойству
 function sortStudents(prop, dir) {
   const studentsCopy = [...students];
   return studentsCopy.sort(function (studentA, studentB) {
@@ -95,6 +101,7 @@ function sortStudents(prop, dir) {
   });
 }
 
+// фильтрация массива по свойству
 function filterStudents(arr, prop, value) {
   const arrCopy = [...arr];
   const result = [];
@@ -104,6 +111,7 @@ function filterStudents(arr, prop, value) {
   return result;
 }
 
+// слушатель на сортировку
 tableHeaders.forEach((el) => {
   el.addEventListener("click", function () {
     sortProp = this.dataset.prop;
@@ -112,6 +120,7 @@ tableHeaders.forEach((el) => {
   });
 });
 
+// слушатель на фильтрацию
 filters.forEach((el) => {
   el.addEventListener("input", function () {
     filterProp = this.dataset.filter;
@@ -120,6 +129,7 @@ filters.forEach((el) => {
   });
 });
 
+// слушатель на валидность введенных данных в инпуты
 Array.from(addStudentForm.elements).forEach((input) => {
   if (input.required) {
     input.addEventListener("change", () => {
@@ -135,10 +145,12 @@ Array.from(addStudentForm.elements).forEach((input) => {
   }
 });
 
+// слушатель на включение кнопки по валидности
 addStudentForm.addEventListener("change", function () {
   btnSubmit.disabled = this.checkValidity() ? false : true;
 });
 
+// слушатель на отправку формы, добавление данных в массив
 addStudentForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
