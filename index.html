@@ -17,14 +17,87 @@
   <body>
     <section class="main">
       <div class="container">
-        <form id="form-filter" class="form-filter">
-          <div class="input-group input-group-sm mb-3 row">
-            <h2 class="form__header col-auto">Фильтры</h2>
+        <form class="mb-3" id="addStudentForm">
+          <h2>Добавление нового студента</h2>
+          <div class="row mb-2">
             <div class="col">
-              <label for="fio" class="form-label">ФИО</label>
+              <label for="addSurname" class="form-label">Фaмилия</label>
               <input
                 class="form-control"
-                id="fio"
+                id="addSurname"
+                type="text"
+                placeholder="Иванов"
+                required
+              />
+            </div>
+            <div class="col">
+              <label for="addName" class="form-label">Имя</label>
+              <input
+                class="form-control"
+                id="addName"
+                type="text"
+                placeholder="Иван"
+                required
+              />
+            </div>
+            <div class="col">
+              <label for="addPatronimyc" class="form-label">Отчество</label>
+              <input
+                class="form-control"
+                id="addPatronimyc"
+                type="text"
+                placeholder="Иванович"
+                required
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="addBirthdate" class="form-label">Дата рождения</label>
+              <input
+                id="addBirthdate"
+                class="form-control"
+                type="date"
+                min="1900-01-01"
+                value="2000-01-01"
+                required
+              />
+            </div>
+            <div class="col">
+              <label for="addStartStudyYear" class="form-label">
+                Год начала обучения
+              </label>
+              <input
+                class="form-control"
+                id="addStartStudyYear"
+                type="number"
+                min="2000"
+                required
+              />
+            </div>
+            <div class="col">
+              <label for="addFaculty" class="form-label">Факультет</label>
+              <input
+                class="form-control"
+                type="text"
+                id="addFaculty"
+                placeholder="Электротехника"
+                required
+              />
+            </div>
+          </div>
+          <button disabled class="btn btn-primary" type="submit">
+            Добавить
+          </button>
+        </form>
+        <form id="formFilter" class="mb-3">
+          <h2 class="form__header col-auto">Фильтры</h2>
+          <div class="input-group input-group-sm mb-3 row">
+            <div class="col">
+              <label for="filterFio" class="form-label">ФИО</label>
+              <input
+                class="form-control"
+                id="filterFio"
                 data-filter="fio"
                 type="text"
                 placeholder="Иван"
@@ -32,32 +105,32 @@
               />
             </div>
             <div class="col">
-              <label for="faculty" class="form-label">Факультет</label>
+              <label for="filterFaculty" class="form-label">Факультет</label>
               <input
                 class="form-control"
-                id="faculty"
+                id="filterFaculty"
                 data-filter="faculty"
                 type="text"
                 placeholder="Электротехника"
               />
             </div>
             <div class="col">
-              <label for="age" class="form-label">Возраст</label>
+              <label for="filterAge" class="form-label">Возраст</label>
               <input
                 class="form-control"
-                id="age"
+                id="filterAge"
                 data-filter="age"
                 type="number"
                 placeholder="27"
               />
             </div>
             <div class="col">
-              <label for="startStudyYear" class="form-label">
+              <label for="filterStartStudyYear" class="form-label">
                 Год налача обучения
               </label>
               <input
                 class="form-control"
-                id="startStudyYear"
+                id="filterStartStudyYear"
                 data-filter="startStudyYear"
                 type="number"
                 placeholder="2023"

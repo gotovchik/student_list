@@ -31,7 +31,18 @@ const students = [
 
 const studentList = document.getElementById("student-list");
 const tableHeaders = document.querySelectorAll(".table th");
-const filters = document.querySelectorAll(".form-filter input");
+const filters = document.querySelectorAll(".formFilter input");
+const addStudentForm = document.getElementById("addStudentForm");
+const btnSubmit = addStudentForm.querySelector("button");
+const currDate = new Date();
+
+document
+  .getElementById("addBirthdate")
+  .setAttribute("max", currDate.toISOString().split("T")[0]);
+
+const inputStartStudyYear = document.getElementById("addStartStudyYear");
+inputStartStudyYear.setAttribute("max", currDate.getFullYear());
+inputStartStudyYear.setAttribute("value", currDate.getFullYear());
 
 let sortProp = "fio";
 let sortDir = true;
@@ -107,6 +118,48 @@ filters.forEach((el) => {
     filterValue = this.value;
     renderStudentTable();
   });
+});
+
+Array.from(addStudentForm.elements).forEach((input) => {
+  if (input.required) {
+    input.addEventListener("change", () => {
+      if (input.checkValidity()) {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+      } else {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        input.reportValidity();
+      }
+    });
+  }
+});
+
+addStudentForm.addEventListener("change", function () {
+  btnSubmit.disabled = this.checkValidity() ? false : true;
+});
+
+addStudentForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const name = document.getElementById("addName").value.trim();
+  const surname = document.getElementById("addSurname").value.trim();
+  const patronimyc = document.getElementById("addPatronimyc").value.trim();
+  const birthdate = new Date(document.getElementById("addBirthdate").value);
+  const startStudyYear = document.getElementById("addStartStudyYear").value;
+  const faculty = document.getElementById("addFaculty").value.trim();
+
+  students.push(
+    new Student(name, surname, patronimyc, birthdate, startStudyYear, faculty)
+  );
+
+  this.reset();
+  btnSubmit.disabled = true;
+  Array.from(this.elements).forEach((input) => {
+    input.classList.remove("is-valid");
+  });
+
+  renderStudentTable();
 });
 
 renderStudentTable();
