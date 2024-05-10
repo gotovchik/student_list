@@ -69,7 +69,7 @@ export default class Student {
   }
 
   getCourseOfStudy() {
-    const endStudyYear = this.#startStudyYear + 4;
+    const endStudyYear = this.#startStudyYear + 3;
     const course =
       (endStudyYear === this.#currYear && this.#today.getMonth >= 8) ||
       endStudyYear < this.#currYear
