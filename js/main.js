@@ -31,9 +31,12 @@ const students = [
 
 const studentList = document.getElementById("student-list");
 const tableHeaders = document.querySelectorAll(".table th");
+const filters = document.querySelectorAll(".form-filter input");
 
 let sortProp = "fio";
 let sortDir = true;
+let filterProp = "fio";
+let filterValue = "";
 
 function createTableRow(student) {
   const tableRow = document.createElement("tr");
@@ -56,7 +59,11 @@ function createTableRow(student) {
 }
 
 function renderStudentTable() {
-  const students = sortStudents(sortProp, sortDir);
+  const students = filterStudents(
+    sortStudents(sortProp, sortDir),
+    filterProp,
+    filterValue
+  );
 
   studentList.innerHTML = "";
 
@@ -66,8 +73,8 @@ function renderStudentTable() {
 }
 
 function sortStudents(prop, dir) {
-  const studentCopy = [...students];
-  return studentCopy.sort(function (studentA, studentB) {
+  const studentsCopy = [...students];
+  return studentsCopy.sort(function (studentA, studentB) {
     if (
       !dir == false
         ? studentA[prop] < studentB[prop]
@@ -77,10 +84,27 @@ function sortStudents(prop, dir) {
   });
 }
 
+function filterStudents(arr, prop, value) {
+  const arrCopy = [...arr];
+  const result = [];
+  for (const item of arrCopy) {
+    if (String(item[prop]).includes(value)) result.push(item);
+  }
+  return result;
+}
+
 tableHeaders.forEach((el) => {
   el.addEventListener("click", function () {
     sortProp = this.dataset.prop;
     sortDir = !sortDir;
+    renderStudentTable();
+  });
+});
+
+filters.forEach((el) => {
+  el.addEventListener("input", function () {
+    filterProp = this.dataset.filter;
+    filterValue = this.value;
     renderStudentTable();
   });
 });

@@ -17,6 +17,54 @@
   <body>
     <section class="main">
       <div class="container">
+        <form id="form-filter" class="form-filter">
+          <div class="input-group input-group-sm mb-3 row">
+            <h2 class="form__header col-auto">Фильтры</h2>
+            <div class="col">
+              <label for="fio" class="form-label">ФИО</label>
+              <input
+                class="form-control"
+                id="fio"
+                data-filter="fio"
+                type="text"
+                placeholder="Иван"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div class="col">
+              <label for="faculty" class="form-label">Факультет</label>
+              <input
+                class="form-control"
+                id="faculty"
+                data-filter="faculty"
+                type="text"
+                placeholder="Электротехника"
+              />
+            </div>
+            <div class="col">
+              <label for="age" class="form-label">Возраст</label>
+              <input
+                class="form-control"
+                id="age"
+                data-filter="age"
+                type="number"
+                placeholder="27"
+              />
+            </div>
+            <div class="col">
+              <label for="startStudyYear" class="form-label">
+                Год налача обучения
+              </label>
+              <input
+                class="form-control"
+                id="startStudyYear"
+                data-filter="startStudyYear"
+                type="number"
+                placeholder="2023"
+              />
+            </div>
+          </div>
+        </form>
         <h1 class="table__header">Студенты</h1>
         <table
           class="table table-primary table-striped table-bordered border-primary"
