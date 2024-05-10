@@ -57,7 +57,7 @@ export default class Student {
 
   getBirthdate() {
     const year = this.#birthdate.getFullYear();
-    let month = this.#birthdate.getMonth() - 1;
+    let month = this.#birthdate.getMonth() + 1;
     month = month < 10 ? "0" + month : month;
     let day = this.#birthdate.getDate();
     day = day < 10 ? "0" + day : day;
@@ -74,7 +74,7 @@ export default class Student {
       (endStudyYear === this.#currYear && today.getMonth >= 8) ||
       endStudyYear < this.#currYear
         ? "Закончил"
-        : `${this.#currYear - this.#startStudyYear} курс`;
+        : `${this.#currYear - this.#startStudyYear + 1} курс`;
     return `${this.#startStudyYear} - ${endStudyYear} (${course})`;
   }
 }

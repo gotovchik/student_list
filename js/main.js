@@ -7,7 +7,7 @@ const students = [
     "Игорь",
     "Готовчик",
     "Витальевич",
-    new Date(1995, 6, 18),
+    new Date(1995, 4, 18),
     2021,
     "Информационные технологии"
   ),
@@ -31,7 +31,7 @@ const students = [
 
 const studentList = document.getElementById("student-list");
 const tableHeaders = document.querySelectorAll(".table th");
-const filters = document.querySelectorAll(".formFilter input");
+const filters = document.querySelectorAll(".form-filter input");
 const addStudentForm = document.getElementById("addStudentForm");
 const btnSubmit = addStudentForm.querySelector("button");
 const currDate = new Date();
@@ -146,7 +146,9 @@ addStudentForm.addEventListener("submit", function (event) {
   const surname = document.getElementById("addSurname").value.trim();
   const patronimyc = document.getElementById("addPatronimyc").value.trim();
   const birthdate = new Date(document.getElementById("addBirthdate").value);
-  const startStudyYear = document.getElementById("addStartStudyYear").value;
+  const startStudyYear = Number(
+    document.getElementById("addStartStudyYear").value
+  );
   const faculty = document.getElementById("addFaculty").value.trim();
 
   students.push(
