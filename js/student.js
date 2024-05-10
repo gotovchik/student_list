@@ -71,7 +71,7 @@ export default class Student {
   getCourseOfStudy() {
     const endStudyYear = this.#startStudyYear + 4;
     const course =
-      (endStudyYear === this.#currYear && today.getMonth >= 8) ||
+      (endStudyYear === this.#currYear && this.#today.getMonth >= 8) ||
       endStudyYear < this.#currYear
         ? "Закончил"
         : `${this.#currYear - this.#startStudyYear + 1} курс`;

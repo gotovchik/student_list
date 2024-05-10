@@ -106,7 +106,8 @@ function filterStudents(arr, prop, value) {
   const arrCopy = [...arr];
   const result = [];
   for (const item of arrCopy) {
-    if (String(item[prop]).includes(value)) result.push(item);
+    if (String(item[prop]).toLowerCase().includes(value.toLowerCase()))
+      result.push(item);
   }
   return result;
 }
