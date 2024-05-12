@@ -41,10 +41,10 @@
               />
             </div>
             <div class="col">
-              <label for="addPatronimyc" class="form-label">Отчество</label>
+              <label for="addLastname" class="form-label">Отчество</label>
               <input
                 class="form-control"
-                id="addPatronimyc"
+                id="addLastname"
                 type="text"
                 placeholder="Иванович"
                 required
@@ -53,9 +53,9 @@
           </div>
           <div class="row mb-3">
             <div class="col">
-              <label for="addBirthdate" class="form-label">Дата рождения</label>
+              <label for="addBirthday" class="form-label">Дата рождения</label>
               <input
-                id="addBirthdate"
+                id="addBirthday"
                 class="form-control"
                 type="date"
                 min="1900-01-01"
@@ -64,12 +64,12 @@
               />
             </div>
             <div class="col">
-              <label for="addStartStudy" class="form-label">
+              <label for="addStudyStart" class="form-label">
                 Год начала обучения
               </label>
               <input
                 class="form-control"
-                id="addStartStudy"
+                id="addStudyStart"
                 type="number"
                 min="2000"
                 required
@@ -125,13 +125,13 @@
               />
             </div>
             <div class="col">
-              <label for="filterStartStudy" class="form-label">
+              <label for="filterStudyStart" class="form-label">
                 Год налача обучения
               </label>
               <input
                 class="form-control"
-                id="filterStartStudy"
-                data-filter="startStudy"
+                id="filterStudyStart"
+                data-filter="studyStart"
                 type="number"
                 placeholder="2023"
               />
@@ -147,6 +147,7 @@
             <th data-prop="faculty">Факультет</th>
             <th data-prop="age">Дата рождения</th>
             <th data-prop="startStudy">Годы обучения</th>
+            <th>Удалить</th>
           </thead>
           <tbody id="student-list"></tbody>
         </table>

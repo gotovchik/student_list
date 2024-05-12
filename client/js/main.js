@@ -2,33 +2,81 @@
 
 import Student from "./student.js";
 
+const URL_BASE = "http://localhost:3000";
+
+// получение данных с сервера
+async function getStudents() {
+  const response = await fetch(`${URL_BASE}/api/students`);
+  const data = await response.json();
+
+  return data;
+}
+
+// добавление данных
+async function addStudent(student) {
+  const response = fetch(`${URL_BASE}/api/students`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(student),
+  });
+
+  const data = await response.json();
+
+  return data;
+}
+
+// удаление данных по id
+function deleteStudent(id) {
+  const response = fetch(`${URL_BASE}/api/students/${id}`, {
+    method: "DELETE",
+  });
+}
+
 // массив студентов
-const students = [
-  new Student(
-    "Игорь",
-    "Готовчик",
-    "Витальевич",
-    new Date(1995, 4, 18),
-    2021,
-    "Информационные технологии"
-  ),
-  new Student(
-    "Василий",
-    "Петров",
-    "Иванович",
-    new Date(1993, 9, 21),
-    2018,
-    "Электротехника"
-  ),
-  new Student(
-    "Ольга",
-    "Коваль",
-    "Михайловна",
-    new Date(1998, 2, 5),
-    2019,
-    "Ландшафтный дизайн"
-  ),
+let students = [
+  // new Student(
+  //   "Игорь",
+  //   "Готовчик",
+  //   "Витальевич",
+  //   new Date(1995, 4, 18),
+  //   2021,
+  //   "Информационные технологии"
+  // ),
+  // new Student(
+  //   "Василий",
+  //   "Петров",
+  //   "Иванович",
+  //   new Date(1993, 9, 21),
+  //   2018,
+  //   "Электротехника"
+  // ),
+  // new Student(
+  //   "Ольга",
+  //   "Коваль",
+  //   "Михайловна",
+  //   new Date(1998, 2, 5),
+  //   2019,
+  //   "Ландшафтный дизайн"
+  // ),
 ];
+
+const data = await getStudents();
+
+if (data) {
+  data.forEach((student) => {
+    students.push(
+      new Student(
+        student.id,
+        student.name,
+        student.surname,
+        student.lastname,
+        new Date(student.birthday),
+        student.studyStart,
+        student.faculty
+      )
+    );
+  });
+}
 
 const studentList = document.getElementById("student-list");
 const tableHeaders = document.querySelectorAll(".table th");
@@ -39,12 +87,12 @@ const currDate = new Date();
 
 // выставляем максимальное значение для инпута
 document
-  .getElementById("addBirthdate")
+  .getElementById("addBirthday")
   .setAttribute("max", currDate.toISOString().split("T")[0]);
 
-const inputStartStudy = document.getElementById("addStartStudy");
-inputStartStudy.setAttribute("max", currDate.getFullYear());
-inputStartStudy.setAttribute("value", currDate.getFullYear());
+const inputStudyStart = document.getElementById("addStudyStart");
+inputStudyStart.setAttribute("max", currDate.getFullYear());
+inputStudyStart.setAttribute("value", currDate.getFullYear());
 
 // переменные для сортировки и фильтрации
 let sortProp = "fio";
@@ -57,18 +105,30 @@ function createTableRowElement(student) {
   const tableRowElement = document.createElement("tr");
   const studentFIOElement = document.createElement("td");
   const studentFacultyElement = document.createElement("td");
-  const studentBirthdateElement = document.createElement("td");
+  const studentBirthdayElement = document.createElement("td");
   const studentCourseElement = document.createElement("td");
+  const deleteButtonCol = document.createElement("td");
+  const deleteButton = document.createElement("button");
 
   studentFIOElement.textContent = student.fio;
   studentFacultyElement.textContent = student.faculty;
-  studentBirthdateElement.textContent = student.getBirthdateAndAgeString();
+  studentBirthdayElement.textContent = student.getBirthdayAndAgeString();
   studentCourseElement.textContent = student.getCourseOfStudy();
+
+  deleteButton.classList.add("btn", "btn-danger");
+  deleteButton.textContent = "Удалить";
 
   tableRowElement.append(studentFIOElement);
   tableRowElement.append(studentFacultyElement);
-  tableRowElement.append(studentBirthdateElement);
+  tableRowElement.append(studentBirthdayElement);
   tableRowElement.append(studentCourseElement);
+  deleteButtonCol.append(deleteButton);
+  tableRowElement.append(deleteButtonCol);
+
+  deleteButton.addEventListener("click", () => {
+    deleteStudent(student.id);
+    tableRowElement.remove();
+  });
 
   return tableRowElement;
 }
@@ -152,19 +212,28 @@ addStudentForm.addEventListener("change", function () {
 });
 
 // слушатель на отправку формы, добавление данных в массив
-addStudentForm.addEventListener("submit", function (event) {
+addStudentForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const name = document.getElementById("addName").value.trim();
   const surname = document.getElementById("addSurname").value.trim();
-  const patronimyc = document.getElementById("addPatronimyc").value.trim();
-  const birthdate = new Date(document.getElementById("addBirthdate").value);
-  const startStudy = Number(document.getElementById("addStartStudy").value);
+  const lastname = document.getElementById("addLastname").value.trim();
+  const birthday = new Date(document.getElementById("addBirthday").value);
+  const studyStart = document.getElementById("addStudyStart").value;
   const faculty = document.getElementById("addFaculty").value.trim();
 
-  students.push(
-    new Student(name, surname, patronimyc, birthdate, startStudy, faculty)
-  );
+  const student = await addStudent({
+    name,
+    surname,
+    lastname,
+    birthday,
+    studyStart,
+    faculty,
+  });
+
+  student.birthday = new Date(student.birthday);
+
+  students.push(student);
 
   this.reset();
   btnSubmit.disabled = true;
