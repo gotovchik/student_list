@@ -42,9 +42,9 @@ document
   .getElementById("addBirthdate")
   .setAttribute("max", currDate.toISOString().split("T")[0]);
 
-const inputStartStudyYear = document.getElementById("addStartStudyYear");
-inputStartStudyYear.setAttribute("max", currDate.getFullYear());
-inputStartStudyYear.setAttribute("value", currDate.getFullYear());
+const inputStartStudy = document.getElementById("addStartStudy");
+inputStartStudy.setAttribute("max", currDate.getFullYear());
+inputStartStudy.setAttribute("value", currDate.getFullYear());
 
 // переменные для сортировки и фильтрации
 let sortProp = "fio";
@@ -159,13 +159,11 @@ addStudentForm.addEventListener("submit", function (event) {
   const surname = document.getElementById("addSurname").value.trim();
   const patronimyc = document.getElementById("addPatronimyc").value.trim();
   const birthdate = new Date(document.getElementById("addBirthdate").value);
-  const startStudyYear = Number(
-    document.getElementById("addStartStudyYear").value
-  );
+  const startStudy = Number(document.getElementById("addStartStudy").value);
   const faculty = document.getElementById("addFaculty").value.trim();
 
   students.push(
-    new Student(name, surname, patronimyc, birthdate, startStudyYear, faculty)
+    new Student(name, surname, patronimyc, birthdate, startStudy, faculty)
   );
 
   this.reset();

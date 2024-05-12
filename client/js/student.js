@@ -5,17 +5,17 @@ export default class Student {
   #surname;
   #patronymic;
   #birthdate;
-  #startStudyYear;
+  #startStudy;
   #faculty;
   #today;
   #currYear;
 
-  constructor(name, surname, patronymic, birthdate, startStudyYear, faculty) {
+  constructor(name, surname, patronymic, birthdate, startStudy, faculty) {
     this.#name = name;
     this.#surname = surname;
     this.#patronymic = patronymic;
     this.#birthdate = birthdate;
-    this.#startStudyYear = startStudyYear;
+    this.#startStudy = startStudy;
     this.#faculty = faculty;
 
     this.#today = new Date();
@@ -30,12 +30,12 @@ export default class Student {
     return this.#currYear - this.#birthdate.getFullYear();
   }
 
-  get startStudyYear() {
-    return this.#startStudyYear;
+  get startStudy() {
+    return this.#startStudy;
   }
 
-  set startStudyYear(startStudyYear) {
-    this.#startStudyYear = startStudyYear;
+  set startStudy(startStudy) {
+    this.#startStudy = startStudy;
   }
 
   get faculty() {
@@ -69,12 +69,12 @@ export default class Student {
   }
 
   getCourseOfStudy() {
-    const endStudyYear = this.#startStudyYear + 3;
+    const endStudyYear = this.#startStudy + 3;
     const course =
       (endStudyYear === this.#currYear && this.#today.getMonth >= 8) ||
       endStudyYear < this.#currYear
         ? "Закончил"
-        : `${this.#currYear - this.#startStudyYear + 1} курс`;
-    return `${this.#startStudyYear} - ${endStudyYear} (${course})`;
+        : `${this.#currYear - this.#startStudy + 1} курс`;
+    return `${this.#startStudy} - ${endStudyYear} (${course})`;
   }
 }
