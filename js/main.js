@@ -53,24 +53,24 @@ let filterProp = "fio";
 let filterValue = "";
 
 // рендер данных студента в строку таблицы
-function createTableRow(student) {
-  const tableRow = document.createElement("tr");
-  const studentFIO = document.createElement("td");
-  const studentFaculty = document.createElement("td");
-  const studentBirthdate = document.createElement("td");
-  const studentCourse = document.createElement("td");
+function createTableRowElement(student) {
+  const tableRowElement = document.createElement("tr");
+  const studentFIOElement = document.createElement("td");
+  const studentFacultyElement = document.createElement("td");
+  const studentBirthdateElement = document.createElement("td");
+  const studentCourseElement = document.createElement("td");
 
-  studentFIO.textContent = student.fio;
-  studentFaculty.textContent = student.faculty;
-  studentBirthdate.textContent = student.getBirthdateAndAgeString();
-  studentCourse.textContent = student.getCourseOfStudy();
+  studentFIOElement.textContent = student.fio;
+  studentFacultyElement.textContent = student.faculty;
+  studentBirthdateElement.textContent = student.getBirthdateAndAgeString();
+  studentCourseElement.textContent = student.getCourseOfStudy();
 
-  tableRow.append(studentFIO);
-  tableRow.append(studentFaculty);
-  tableRow.append(studentBirthdate);
-  tableRow.append(studentCourse);
+  tableRowElement.append(studentFIOElement);
+  tableRowElement.append(studentFacultyElement);
+  tableRowElement.append(studentBirthdateElement);
+  tableRowElement.append(studentCourseElement);
 
-  return tableRow;
+  return tableRowElement;
 }
 
 // рендер всей таблицы
@@ -84,7 +84,7 @@ function renderStudentTable() {
   studentList.innerHTML = "";
 
   for (const student of students) {
-    studentList.append(createTableRow(student));
+    studentList.append(createTableRowElement(student));
   }
 }
 
